@@ -35,9 +35,9 @@ https://github.com/heyblackC/yuketangHelper
 
    ![image-20210419085901386](https://gitee.com/cat1007/markdown-pics/raw/master/uPic/image-20210419085901386.png)
 
-5. 打开浏览器，登录云课堂并获取对应的cookie[参考](https://blog.csdn.net/lenfranky/article/details/90316262)
+5. 打开浏览器，登录云课堂并获取对应的cookie  [参考](https://blog.csdn.net/lenfranky/article/details/90316262)
 
-6. 修改源代码并填入你自己的值
+6. 修改 `videoHelper.py` 源代码并填入你自己的值
 
    ![image-20210419090408207](https://gitee.com/cat1007/markdown-pics/raw/master/uPic/image-20210419090408207.png)
 
