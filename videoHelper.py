@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # version 4
 # developed by zk chen
+import random
 import time
 import requests
 import re
@@ -68,12 +69,12 @@ def one_video_watcher(video_id, video_name, cid, user_id, classroomid, skuid):
                     "i": 5,
                     "et": "loadeddata",
                     "p": "web",
-                    "n": "ws",
+                    "n": "ali-cdn.xuetangx.com",
                     "lob": "cloud4",
                     "cp": video_frame,
                     "fp": 0,
                     "tp": 0,
-                    "sp": 1,
+                    "sp": 2,
                     "ts": str(timstap),
                     "u": int(user_id),
                     "uip": "",
@@ -83,8 +84,8 @@ def one_video_watcher(video_id, video_name, cid, user_id, classroomid, skuid):
                     "classroomid": classroomid,
                     "cc": video_id,
                     "d": 4976.5,
-                    "pg": "4512143_tkqx",
-                    "sq": 2,
+                    "pg": video_id + "_" + ''.join(random.sample('zyxwvutsrqponmlkjihgfedcba1234567890', 4)),
+                    "sq": i,
                     "t": "video"
                 }
             )
