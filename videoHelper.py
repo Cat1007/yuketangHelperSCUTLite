@@ -100,14 +100,18 @@ def one_video_watcher(video_id, video_name, cid, user_id, classroomid, skuid):
             r = requests.post(url=submit_url, headers=headers, data=data)
         except:
             pass
-        progress = requests.get(url=get_url, headers=headers)
-        res_rate = json.loads(progress.text)
-        tmp_rate = res_rate["data"][video_id]["rate"]
-        if tmp_rate is None:
-            return 0
-        val = str(tmp_rate)
-        print("学习进度为：" + str(val) + "%/100%")
-        time.sleep(0.7)
+        try:
+            progress = requests.get(url=get_url, headers=headers)
+            res_rate = json.loads(progress.text)
+            tmp_rate = res_rate["data"][video_id]["rate"]
+            if tmp_rate is None:
+                return 0
+            val = str(tmp_rate)
+            print("学习进度为：" + str(val) + "%/100%")
+            time.sleep(2)
+        except Exception as e:
+            print(e.__str__())
+            pass
     print("视频" + video_id + " " + video_name + "学习完成！")
     return 1
 
