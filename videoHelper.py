@@ -20,12 +20,12 @@ url_root = "https://zzugs.yuketang.cn/"
 headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.67 Safari/537.36',
     'Content-Type': 'application/json',
-    'Cookie': 'csrftoken=' + csrftoken + '; sessionid=' + sessionid + '; university_id=2627; platform_id=3',
+    'Cookie': 'csrftoken=' + csrftoken + '; sessionid=' + sessionid + '; university_id=2824; platform_id=3',
     'x-csrftoken': csrftoken,
     'sec-fetch-dest': 'empty',
     'sec-fetch-mode': 'cors',
     'sec-fetch-site': 'same-origin',
-    'university-id': '2627',
+    'university-id': '2824',
     'xtbz': 'cloud'
 }
 
@@ -44,7 +44,7 @@ def one_video_watcher(video_id, video_name, cid, user_id, classroomid, skuid):
     url = url_root + "video-log/heartbeat/"
     get_url = url_root + "video-log/get_video_watch_progress/?cid=" + str(
         cid) + "&user_id=" + user_id + "&classroom_id=" + classroomid + "&video_type=video&vtype=rate&video_id=" + str(
-        video_id) + "&snapshot=1&term=latest&uv_id=2627"
+        video_id) + "&snapshot=1&term=latest&uv_id=2824"
     progress = requests.get(url=get_url, headers=headers)
     if_completed = '0'
     try:
@@ -114,7 +114,7 @@ def one_video_watcher(video_id, video_name, cid, user_id, classroomid, skuid):
 
 def get_videos_ids(course_name, classroom_id, course_sign):
     get_homework_ids = url_root + "mooc-api/v1/lms/learn/course/chapter?cid=" + str(
-        classroom_id) + "&term=latest&uv_id=2627&sign=" + course_sign
+        classroom_id) + "&term=latest&uv_id=2824&sign=" + course_sign
     homework_ids_response = requests.get(url=get_homework_ids, headers=headers)
     homework_json = json.loads(homework_ids_response.text)
     homework_dic = {}
@@ -149,8 +149,8 @@ if __name__ == "__main__":
         raise Exception("也许是网路问题，获取不了user_id,请试着重新运行!!! please re-run this program!")
 
     # 然后要获取教室id
-    get_classroom_id = url_root + "mooc-api/v1/lms/user/user-courses/?status=1&page=1&no_page=1&term=latest&uv_id=2627"
-    submit_url = url_root + "mooc-api/v1/lms/exercise/problem_apply/?term=latest&uv_id=2627"
+    get_classroom_id = url_root + "mooc-api/v1/lms/user/user-courses/?status=1&page=1&no_page=1&term=latest&uv_id=2824"
+    submit_url = url_root + "mooc-api/v1/lms/exercise/problem_apply/?term=latest&uv_id=2824"
     classroom_id_response = requests.get(url=get_classroom_id, headers=headers)
     try:
         for ins in json.loads(classroom_id_response.text)["data"]["product_list"]:
