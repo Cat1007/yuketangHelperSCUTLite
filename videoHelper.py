@@ -13,6 +13,7 @@ csrftoken = ""  # 需改成自己的
 sessionid = ""  # 需改成自己的
 university_id = ""  # 需改成自己的
 url_root = ""  # 按需修改域名
+learning_rate = 4  # 学习速率
 
 # 以下字段不用改，下面的代码也不用改动
 user_id = ""
@@ -56,14 +57,14 @@ def one_video_watcher(video_id, video_name, cid, user_id, classroomid, skuid):
         return 1
     else:
         print(video_name + "，尚未学习，现在开始自动学习")
+        time.sleep(2)
     video_frame = 0
     val = 0
-    learning_rate = 20
     t = time.time()
     timstap = int(round(t * 1000))
-    while val != "1.0" and val != '1':
-        heart_data = []
-        for i in range(50):
+    heart_data = []
+    while float(val) <= 0.95:
+        for i in range(3):
             heart_data.append(
                 {
                     "i": 5,
@@ -92,6 +93,7 @@ def one_video_watcher(video_id, video_name, cid, user_id, classroomid, skuid):
             video_frame += learning_rate
         data = {"heart_data": heart_data}
         r = requests.post(url=url, headers=headers, json=data)
+        heart_data = []
         try:
             delay_time = re.search(r'Expected available in(.+?)second.', r.text).group(1).strip()
             print("由于网络阻塞，万恶的雨课堂，要阻塞" + str(delay_time) + "秒")
@@ -107,7 +109,7 @@ def one_video_watcher(video_id, video_name, cid, user_id, classroomid, skuid):
             if tmp_rate is None:
                 return 0
             val = str(tmp_rate)
-            print("学习进度为：" + str(val) + "%/100%")
+            print("学习进度为：\t" + str(float(val) * 100) + "%/100%")
             time.sleep(2)
         except Exception as e:
             print(e.__str__())
