@@ -12,8 +12,8 @@ import json
 csrftoken = ""  # 需改成自己的
 sessionid = ""  # 需改成自己的
 university_id = ""  # 需改成自己的
-url_root = ""  # 按需修改域名
-learning_rate = 4  # 学习速率
+url_root = ""  # 按需修改域名 example:https://*****.yuketang.cn/
+learning_rate = 4  # 学习速率 我觉得默认的这个就挺好的
 
 # 以下字段不用改，下面的代码也不用改动
 user_id = ""
