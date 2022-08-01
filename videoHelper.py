@@ -58,8 +58,21 @@ def one_video_watcher(video_id, video_name, cid, user_id, classroomid, skuid):
     else:
         print(video_name + "，尚未学习，现在开始自动学习")
         time.sleep(2)
+
+    # 默认为0（即还没开始看）
     video_frame = 0
     val = 0
+    # 获取实际值（观看时长和完成率）
+    try:
+        res_rate = json.loads(progress.text)
+        tmp_rate = res_rate["data"][video_id]["rate"]
+        if tmp_rate is None:
+            return 0
+        val = tmp_rate
+        video_frame = res_rate["data"][video_id]["watch_length"]
+    except Exception as e:
+        print(e.__str__())
+
     t = time.time()
     timstap = int(round(t * 1000))
     heart_data = []
@@ -174,21 +187,30 @@ if __name__ == "__main__":
     # 显示用户提示
     for index, value in enumerate(your_courses):
         print("编号：" + str(index + 1) + " 课名：" + str(value["course_name"]))
-    number = input("你想刷哪门课呢？请输入编号。输入0表示全部课程都刷一遍\n")
-    if int(number) == 0:
-        # 0 表示全部刷一遍
-        for ins in your_courses:
-            homework_dic = get_videos_ids(ins["course_name"], ins["classroom_id"], ins["course_sign"])
+
+    flag = True
+    while(flag):
+        number = input("你想刷哪门课呢？请输入编号。输入0表示全部课程都刷一遍\n")
+        # 输入不合法则重新输入
+        if not (number.isdigit()) or int(number) > len(your_courses):
+            print("输入不合法！")
+            continue
+        elif int(number) == 0:
+            flag = False    # 输入合法则不需要循环
+            # 0 表示全部刷一遍
+            for ins in your_courses:
+                homework_dic = get_videos_ids(ins["course_name"], ins["classroom_id"], ins["course_sign"])
+                for one_video in homework_dic.items():
+                    one_video_watcher(one_video[0], one_video[1], ins["course_id"], user_id, ins["classroom_id"],
+                                      ins["sku_id"])
+        else:
+            flag = False    # 输入合法则不需要循环
+            # 指定序号的课程刷一遍
+            number = int(number) - 1
+            homework_dic = get_videos_ids(your_courses[number]["course_name"], your_courses[number]["classroom_id"],
+                                          your_courses[number]["course_sign"])
             for one_video in homework_dic.items():
-                one_video_watcher(one_video[0], one_video[1], ins["course_id"], user_id, ins["classroom_id"],
-                                  ins["sku_id"])
-    else:
-        # 指定序号的课程刷一遍
-        number = int(number) - 1
-        homework_dic = get_videos_ids(your_courses[number]["course_name"], your_courses[number]["classroom_id"],
-                                      your_courses[number]["course_sign"])
-        for one_video in homework_dic.items():
-            one_video_watcher(one_video[0], one_video[1], your_courses[number]["course_id"], user_id,
-                              your_courses[number]["classroom_id"],
-                              your_courses[number]["sku_id"])
-    print("搞定啦")
+                one_video_watcher(one_video[0], one_video[1], your_courses[number]["course_id"], user_id,
+                                  your_courses[number]["classroom_id"],
+                                  your_courses[number]["sku_id"])
+        print("搞定啦")
