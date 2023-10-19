@@ -13,7 +13,8 @@ csrftoken = ""  # 需改成自己的
 sessionid = ""  # 需改成自己的
 university_id = ""  # 需改成自己的
 url_root = ""  # 按需修改域名 example:https://*****.yuketang.cn/
-learning_rate = 4  # 学习速率 我觉得默认的这个就挺好的
+learning_rate = 4  # 学习速率 我觉得默认的这个就挺好的 //@Faucet7：怎么说还是有点慢了 原作者是20 着急的话建议调整
+waitingTime = 200 #等待时间 如果视频过期 在waitingTime>=该值时自动跳过该视频 如果正常的视频在该值范围内无法正常完成播放 建议自行调大
 
 # 以下字段不用改，下面的代码也不用改动
 user_id = ""
@@ -122,8 +123,10 @@ def one_video_watcher(video_id, video_name, cid, user_id, classroomid, skuid):
             if tmp_rate is None:
                 return 0
             val = str(tmp_rate)
-            print("学习进度为：\t" + str(float(val) * 100) + "%/100%")
+            print("学习进度为：\t" + str(float(val) * 100) + "%/100%"+ " last_point: " + str(video_frame))
             time.sleep(2)
+            if video_frame >= waitingTime:
+                break
         except Exception as e:
             print(e.__str__())
             pass
